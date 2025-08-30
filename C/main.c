@@ -20,148 +20,180 @@ int sumBinary(int number, int number2, bool c2)
   sprintf(str1, "%08d", number);
   char str2[9];
   sprintf(str2, "%08d", number2);
-  char result[9];
+  static char result[9];
 
 
-  if ((sizeof(str1) == 8 && sizeof(str2) == 8) && (isBinary(str1) && isBinary(str2)))
+  if ((strlen(str1) == 8 && strlen(str2) == 8) && (isBinary(str1) && isBinary(str2)))
   {
     int temp = 0;
     // principal code
-    for (int i = 0; i < sizeof(str1); i++) {
+    for (int i = 0; i < 8; i++) {
       // case 1 -> 1 + 1 +1
       if (str1[i] == '1' && str2[i] == '1' && temp == 1) {
         temp = 1;
-        result[8 - i] = '1';
+        result[8 - i - 1] = '1';
       }
       // case 2 -> 0 + 1 + 1
       else if ((str1[i] == '0' && str2[i] == '1' && temp == 1) || (str1[i] == '1' && str2[i] == '0' && temp == 1)) {
         temp = 1;
-        result[8 - i] = '0';
+        result[8 - i - 1] = '0';
       }
       // case 3 -> 0 + 0 + 1
       else if ((str1[i] == '0' && str2[i] == '1' && temp == 0) || (str1[i] == '1' && str2[i] == '0' && temp == 0)) {
         temp = 0;
-        result[8 - i] = '1';
+        result[8 - i - 1] = '1';
+      }
+      else if (str1[i] == '0' && str2[i] == '0' && temp == 1) {
+        temp = 0;
+        result[8 - i - 1] = '1';
+      }
+      else if (str1[i] == '0' && str2[i] == '0' && temp == 0) {
+        temp = 0;
+        result[8 - i - 1] = '0';
+      }
+      else if (str1[i] == '1' && str2[i] == '1' && temp == 0) {
+        temp = 1;
+        result[8 - i - 1] = '0';
       }
     }
-    return result;
+    result[8] = '\0';
+    return atoi(result);
   }
   else
   {
-    raise("Error: the numbers must be 8 bits long and binary");
+    printf("Error: the numbers must be 8 bits long and binary\n");
+    return -1;
   }
 }
 
 int subtractbinary(int number, int number2, int c) {
-  char str[20];
-  sprintf(str, "%d", number2); // conversion
+  char str[9];
+  sprintf(str, "%08d", number2); // conversion
+  
   if (c == 1) {
-    for (int i = 0; i < sizeof(str); i++) {
+    for (int i = 0; i < 8; i++) {
       if (str[i] == '1')
         str[i] = '0';
       else if (str[i] == '0')
         str[i] = '1';
     }
-    // return sumBinary(number, (int)str, false); // RETURN  
+    int inverted = atoi(str);
+    return sumBinary(number, inverted, false);
   }
 
   else if (c == 2) {
-    char newstr[20];
-    // CONTINUE HERE
-    for (int i = 0; i < sizeof(str); i++) {
-      if (str[i] == '1')
-        str[i] = '0';
-      else if (str[i] == '0')
-        str[i] = '1';
+    char newstr[9];
+    sprintf(newstr, "%08d", number2);
+    
+    for (int i = 0; i < 8; i++) {
+      if (newstr[i] == '1')
+        newstr[i] = '0';
+      else if (newstr[i] == '0')
+        newstr[i] = '1';
     }
-    // newstr = sumBinary(number, 1, true);
-    // return sumBinary(number, (int)newstr, false);
+    
+    int inverted = atoi(newstr);
+    int with_one = sumBinary(inverted, 1, false);
+    return sumBinary(number, with_one, false);
   }
+  return -1;
 }
 
 int tobase(int number, int base) {
   // variables
-  int rest[8];
+  int rest[32];
   int j = 0;
-  char result[20];
+  static char result[33];
 
-  // picking the rest of the division by 2
-  while (number > base) {
-    // rest
+  if (number == 0) {
+    strcpy(result, "0");
+    return atoi(result);
+  }
+
+  // picking the rest of the division
+  while (number > 0) {
     rest[j] = number % base;
-    // division
     number /= base;
     j++;
-    if (number == 1) {
-      rest[j] += number;
+  }
+  
+  // building the number in the target base
+  for (int i = 0; i < j; i++) {
+    int digit = rest[j - 1 - i];
+    if (digit < 10) {
+      result[i] = '0' + digit;
+    } else {
+      result[i] = 'A' + digit - 10;
     }
   }
-  // building the binary number
-  for (int i = 0; i < sizeof(rest); i++) {
-    result[i] = (char)rest[sizeof(rest) - i];
-  }
-  return result;
+  result[j] = '\0';
+  return atoi(result);
 }
 
 int toBinary(int number) {
   // variables
-  int rest[8];
+  int rest[32];
   int j = 0;
-  char result[20];
+  static char result[33];
+
+  if (number == 0) {
+    strcpy(result, "0");
+    return atoi(result);
+  }
 
   // picking the rest of the division by 2
-  while (number > 2) {
-    // rest
+  while (number > 0) {
     rest[j] = number % 2;
-    // division
     number /= 2;
     j++;
-    if (number == 1) {
-      rest[j] += number;
-    }
   }
+  
   // building the binary number
-  for (int i = 0; i < sizeof(rest); i++) {
-    result[i] = (char)rest[sizeof(rest) - i];
+  for (int i = 0; i < j; i++) {
+    result[i] = rest[j - 1 - i] + '0';
   }
-  return result;
+  result[j] = '\0';
+  return atoi(result);
 }
 
 int convertBase(int number, int base, int baseto) {
-  char str[20]; // buffer
-
-  // convert int to string
-  sprintf(str, "%d", number);
-
-  int result = 0;
-
   if (baseto == 2) // binary
   {
     return toBinary(number);
-  } else if (baseto == 10) // decimal
+  } else if (baseto == 10) // to decimal
   {
-    for (int i = 0; i < sizeof(number); i++) {
-      result += (char)((int)str[i] * base ^ sizeof(number) - i - 1); // CHANGE THIS
+    int decimal = 0;
+    int power = 1;
+    
+    while (number > 0) {
+      int digit = number % 10;
+      decimal += digit * power;
+      power *= base;
+      number /= 10;
     }
+    return decimal;
   } else if (base == 10) // decimal to other base
   {
     return tobase(number, baseto);
   }
-  else if (baseto == 16)
+  else if (baseto == 16) // to hexadecimal
   {
-    char hexadecimal[20];
-    result = tobase(number, baseto);
-    sprintf(hexadecimal, "%x", result);
-    result = (int)hexadecimal;
-    return result; // RETURN
+    return tobase(number, baseto);
   } 
   else {
-    for (int i = 0; i < sizeof(number); i++) {
-      result += (char)((int)str[i] * base ^ sizeof(number) - i - 1); // CHANGE THIS
+    // For other base conversions, use intermediate decimal
+    int decimal = 0;
+    int power = 1;
+    
+    while (number > 0) {
+      int digit = number % 10;
+      decimal += digit * power;
+      power *= base;
+      number /= 10;
     }
-    return result;
+    
+    return tobase(decimal, baseto);
   }
-  return result;
 }
 
 /* 
