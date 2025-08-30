@@ -1,0 +1,15 @@
+# Compilados
+*.exe
+*.o
+*.out
+
+# Arquivos temporários
+*~
+*.swp
+
+# Ambiente
+.env
+.env.*
+
+# VSCode
+.vscode/
