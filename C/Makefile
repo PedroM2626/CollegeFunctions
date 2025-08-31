@@ -1,32 +1,46 @@
-# Makefile para compilar C e C++
+# Makefile para C - Qt MinGW (Windows)
+# Versão funcional e otimizada
 
-CC=gcc
-CXX=g++
-CFLAGS=-Wall -Wextra -O2
-CXXFLAGS=-Wall -Wextra -O2
-SRC_C=$(wildcard *.c)
-SRC_CPP=$(wildcard *.cpp)
-OBJ_C=$(SRC_C:.c=.o)
-OBJ_CPP=$(SRC_CPP:.cpp=.o)
-EXEC_C=main_c.exe
-EXEC_CPP=main_cpp.exe
+CC = gcc
+CFLAGS = -Wall -Wextra -O2 -std=c11
+SOURCES = main.c
+OBJECTS = $(SOURCES:.c=.o)
+EXECUTABLE = main.exe
 
-all: $(EXEC_C) $(EXEC_CPP)
+.PHONY: all clean run test help
 
-$(EXEC_C): $(OBJ_C)
-	$(CC) $(CFLAGS) -o $@ $^
+all: $(EXECUTABLE)
 
-$(EXEC_CPP): $(OBJ_CPP)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(EXECUTABLE)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
 clean:
-	rm -f *.o *.exe *.out
+	-del /Q *.o *.exe *.out 2>nul
 
-test:
-	@echo "(Adicione comandos de teste aqui)"
+run: $(EXECUTABLE)
+	$(EXECUTABLE)
+
+test: $(EXECUTABLE)
+	@echo Executando testes...
+	$(EXECUTABLE)
+	@echo Testes concluidos!
+
+help:
+	@echo Comandos disponiveis:
+	@echo   make          - Compila o programa
+	@echo   make clean    - Remove arquivos temporarios
+	@echo   make run      - Compila e executa
+	@echo   make test     - Executa testes
+	@echo   make help     - Mostra esta ajuda
+
+# Builds especiais
+debug: CFLAGS += -g -DDEBUG
+debug: $(EXECUTABLE)
+	@echo Build debug concluido!
+
+release: CFLAGS += -DNDEBUG -O3
+release: $(EXECUTABLE)
+	@echo Build release concluido!

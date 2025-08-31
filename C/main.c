@@ -7,7 +7,7 @@
 bool isBinary(const char *str) {
     for (int i = 0; i < strlen(str); i++) {
         if (str[i] != '0' && str[i] != '1') {
-            return false;
+          return false;
         }
     }
     return true;

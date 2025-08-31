@@ -1,90 +1,131 @@
-# CollegeFunctions
+# CollegeFunctions - C Project
 
-## Descrição
-Este repositório contém uma coleção de funções em C desenvolvidas durante o curso de faculdade. O projeto serve como um espaço para praticar e implementar diversos algoritmos e operações matemáticas, especialmente focados em operações com números binários e conversão entre bases numéricas.
+Este é um projeto C que implementa funções matemáticas úteis para conversão de bases e operações binárias.
 
 ## Funcionalidades
 
-O projeto inclui as seguintes funções:
-- **isBinary**: Verifica se uma string contém apenas caracteres '0' e '1' (binários).
-- **sumBinary**: Realiza a soma de dois números binários de 8 bits.
-- **subtractbinary**: Subtrai dois números binários usando complemento a 1 ou complemento a 2.
-- **tobase**: Converte um número decimal para uma base específica.
-- **toBinary**: Converte um número decimal para binário.
-- **convertBase**: Converte um número de uma base para outra (suporta bases 2, 10 e 16).
+- **Conversão de Bases**: Conversão entre diferentes sistemas numéricos (binário, decimal, hexadecimal)
+- **Operações Binárias**: Soma e subtração de números binários
+- **Verificação**: Validação se uma string representa um número binário válido
 
 ## Estrutura do Projeto
 
 ```
-CollegeFunctions/
-├── C/
-│   ├── main.c
-│   ├── main.exe
-│   ├── Makefile
-│   ├── .gitignore
-│   ├── .env
-│   ├── .env.example
-│   └── README.md
-└── README.md
+C/
+├── main.c          # Arquivo principal com todas as funções
+├── Makefile        # Arquivo de compilação para MinGW (Windows)
+├── README.md       # Este arquivo
+└── .gitignore      # Arquivo de exclusão do Git
 ```
 
-## Linguagens e Expansão
-Este repositório será expandido para incluir implementações em outras linguagens de programação além de C.
-- As pastas serão organizadas por linguagem (por exemplo: C/, Python/, Java/, JavaScript/, C++/).
-- Repositório no GitHub: https://github.com/PedroM2626/CollegeFunctions
+## Requisitos
 
-## Como Usar
+- **Windows** com Qt MinGW instalado
+- **GCC** via Qt MinGW (versão 13.1.0 ou superior)
+- **mingw32-make** incluído no Qt MinGW
 
-### 1. Clone este repositório:
+## Instalação
+
+1. Certifique-se de ter o Qt instalado com MinGW
+2. O caminho padrão é: `C:\Qt\Tools\mingw1310_64\bin`
+
+## Compilação
+
+### Usando o Makefile (Recomendado)
+
 ```bash
-git clone https://github.com/PedroM2626/CollegeFunctions.git
+# Limpar arquivos de compilação anteriores
+C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe clean
+
+# Compilar em modo debug (com símbolos de debug)
+C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe debug
+
+# Compilar em modo release (otimizado)
+C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe release
+
+# Compilar e executar
+C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe run
+
+# Executar testes
+C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe test
+
+# Mostrar ajuda
+C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe help
 ```
 
-### 2. Navegue até a pasta do projeto:
+### Compilação Manual
+
 ```bash
-cd CollegeFunctions/C
+# Configurar o ambiente
+set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
+
+# Compilar
+gcc -Wall -Wextra -O2 -std=c11 -o main.exe main.c
+
+# Executar
+main.exe
 ```
 
-### 3. Configure variáveis de ambiente (opcional):
-Crie um arquivo `.env` baseado no `.env.example` se necessário.
+## Funções Disponíveis
 
-### 4. Compile o código (C e C++):
-Utilize o Makefile para compilar todos os arquivos C e C++ automaticamente:
+### `bool isBinary(const char *str)`
+Verifica se uma string contém apenas '0' e '1'.
+
+### `int sumBinary(int number, int number2, bool c2)`
+Soma dois números binários de 8 bits.
+
+### `int subtractbinary(int number, int number2, int c)`
+Subtrai dois números binários com opções de complemento.
+
+### `int tobase(int number, int base)`
+Converte um número decimal para qualquer base (2-36).
+
+### `int toBinary(int number)`
+Converte um número decimal para binário.
+
+### `int convertBase(int number, int base, int baseto)`
+Converte entre diferentes bases usando decimal como intermediário.
+
+## Exemplo de Uso
+
+O programa principal (`main.c`) já inclui um exemplo básico que imprime:
+```
+CODE STARTED
+Hello, my friends!!!!
+```
+
+## Solução de Problemas
+
+### Erro: "gcc: fatal error: cannot execute 'cc1'"
+Este erro ocorre quando o MinGW não está corretamente configurado no PATH. Use:
 ```bash
-make
+set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
 ```
-Isso irá gerar os executáveis `main_c.exe` (para C) e `main_cpp.exe` (para C++ se houver arquivos .cpp).
 
-### 5. Execute o programa:
-Para rodar o executável C:
+### Erro: "mingw32-make.exe não é reconhecido"
+Use o caminho completo para o executável:
 ```bash
-./main_c.exe
-```
-Para rodar o executável C++ (se existir):
-```bash
-./main_cpp.exe
+C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe
 ```
 
-### 6. Limpe arquivos de build:
-```bash
-make clean
-```
+## Comandos do Makefile
 
-### 7. Testes
-O alvo `make test` está disponível para rodar testes (adapte conforme necessário).
+- `make clean`: Remove arquivos temporários (*.o, *.exe, *.out)
+- `make debug`: Compila com símbolos de debug
+- `make release`: Compila com otimizações
+- `make run`: Compila e executa o programa
+- `make test`: Executa testes básicos
+- `make help`: Mostra todos os comandos disponíveis
 
-## Variáveis de Ambiente
-- Utilize o arquivo `.env.example` como base para criar seu `.env`.
-- Exemplo:
-```
-API_KEY=sua_chave_aqui
-```
+## Status do Projeto
 
-## Desenvolvimento
-Este projeto está em constante desenvolvimento, com novas funções sendo adicionadas conforme necessário para os estudos acadêmicos. Algumas funções ainda estão incompletas ou em processo de implementação.
+✅ **COMPILAÇÃO FUNCIONAL** - O projeto compila com sucesso usando MinGW
+✅ **EXECUÇÃO FUNCIONAL** - O programa executa corretamente
+✅ **MAKEFILE FUNCIONAL** - Todas as opções do Makefile funcionam
+✅ **DOCUMENTAÇÃO ATUALIZADA** - README.md completo e atualizado
 
 ## Autor
 - **Pedro Morato Lahoz**
 
 ## Licença
-Este projeto é de uso livre para fins educacionais.
+Este projeto é para fins educacionais.
