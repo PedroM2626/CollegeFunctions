@@ -1,17 +1,10 @@
-# Compilados
-*.exe
-*.o
-*.out
-
-# Arquivos temporários
-*~
-*.swp
-
-# Ambiente
+# Arquivos de ambiente
 .env
-.env.*
 
-# VSCode
-.vscode/
+# Arquivos de log
+*.log
 
-.Python/
+# Arquivos de compilação
+*.o
+*.exe
+*.pdb
