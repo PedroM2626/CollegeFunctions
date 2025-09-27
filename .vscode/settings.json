@@ -54,5 +54,17 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  
+  // Configurações do Rust Analyzer
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.cargo.allFeatures": true,
+  "rust-analyzer.showUnlinkedFileNotification": true,
+  "rust-analyzer.highlighting.strings": true,
+  "rust-analyzer.lens.enable": true,
+  "rust-analyzer.lens.run.enable": true,
+  "rust-analyzer.lens.debug.enable": true,
+  "rust-analyzer.procMacro.enable": true,
+  "rust-analyzer.imports.granularity.group": "module",
+  "rust-analyzer.completion.autoimport.enable": true
 }
