@@ -33,6 +33,7 @@ fn convert_any_binary_base(number: i64, base1: i64, base2: i64) -> String {
         }
     }
 
+
     result2
 }
 
