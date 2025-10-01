@@ -3,6 +3,7 @@ fn convert_any_binary_base(number: i64, base1: i64, base2: i64) -> String {
     //create variables
     let mut result1 = String::new();
     let mut result2 = String::new();
+    
 
     let pot = base1.trailing_zeros();
     let count = base2.trailing_zeros();
@@ -27,17 +28,8 @@ fn convert_any_binary_base(number: i64, base1: i64, base2: i64) -> String {
 
     // step 2
     for chunk in chars.chunks(count as usize) {
-        match chunk {
-            [a, b] => {
-                // +1 character
-                result2.push(*a);
-                result2.push(*b);
-            }
-            [a] => {
-                // last caracter
-                result2.push(*a);
-            }
-            _ => {}
+        for &c in chunk {
+            result2.push(c);
         }
     }
 
